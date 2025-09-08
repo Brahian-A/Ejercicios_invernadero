@@ -34,4 +34,3 @@ const Thresholds = {
       ts: Date.now()
     });
   }, 3000);
-  
