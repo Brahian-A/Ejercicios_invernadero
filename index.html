@@ -7,15 +7,25 @@
 <body>
   <h1>Elige tu planta</h1>
   <section id="view-config">
-    <label>Temp máx <input id="in-tempMax" type="number"></label>
-    <label>Humedad mín <input id="in-humMin" type="number"></label>
-    <label>Luz mín <input id="in-luxMin" type="number"></label>
+    <div><label>Temp máx <input id="in-tempMax" type="number"></label></div>
+    <div><label>Humedad mín <input id="in-humMin" type="number"></label></div>
+    <div><label>Luz mín <input id="in-luxMin" type="number"></label></div>
     <button id="btn-save-thresholds">Guardar</button>
     <button id="btn-reset-thresholds">Restaurar</button>
     <div id="msg-config"></div>
   </section>
+  
 
+  <section id="view-dashboard">
+    <div id="card-temp">Temperatura: -- °C</div>
+    <div id="card-hum">Humedad: -- %</div>
+    <div id="card-lux">Luz: -- lx</div>
+    <div>Última lectura: <span id="last-ts">--:--:--</span></div>
+  </section>
+  
 <script src="js/sensors.js"></script>
+<script src="js/main.js"></script>
+<link rel="stylesheet" href="css/styles.css">
 
 </body>
 </html>
