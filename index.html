@@ -6,6 +6,7 @@
 </head>
 <body>
   <h1>Elige tu planta</h1>
+  
   <section id="view-config">
     <div><label>Temp máx <input id="in-tempMax" type="number"></label></div>
     <div><label>Humedad mín <input id="in-humMin" type="number"></label></div>
@@ -23,6 +24,49 @@
     <div>Última lectura: <span id="last-ts">--:--:--</span></div>
   </section>
   
+  <section id="view-actuators">
+  <div id="act-bomba">
+    <strong>Bomba</strong>
+    <span id="lbl-bomba-estado"></span>
+    <button id="btn-bomba-manual">ON/OFF</button>
+    <label><input type="checkbox" id="chk-bomba-auto"> Auto</label>
+  </div>
+  <div id="act-ventilador">
+    <strong>Ventilador</strong>
+    <span id="lbl-ventilador-estado"></span>
+    <button id="btn-ventilador-manual">ON/OFF</button>
+    <label><input type="checkbox" id="chk-ventilador-auto"> Auto</label>
+  </div>
+  <div id="act-luces">
+    <strong>Luces</strong>
+    <span id="lbl-luces-estado"></span>
+    <button id="btn-luces-manual">ON/OFF</button>
+    <label><input type="checkbox" id="chk-luces-auto"> Auto</label>
+  </div>
+</section>
+
+<section id="view-actuators">
+  <div id="act-bomba">
+    <strong>Bomba</strong>
+    <span id="lbl-bomba-estado"></span>
+    <button id="btn-bomba-manual">ON/OFF</button>
+    <label><input type="checkbox" id="chk-bomba-auto"> Auto</label>
+  </div>
+  <div id="act-ventilador">
+    <strong>Ventilador</strong>
+    <span id="lbl-ventilador-estado"></span>
+    <button id="btn-ventilador-manual">ON/OFF</button>
+    <label><input type="checkbox" id="chk-ventilador-auto"> Auto</label>
+  </div>
+  <div id="act-luces">
+    <strong>Luces</strong>
+    <span id="lbl-luces-estado"></span>
+    <button id="btn-luces-manual">ON/OFF</button>
+    <label><input type="checkbox" id="chk-luces-auto"> Auto</label>
+  </div>
+</section>
+
+
 <script src="js/sensors.js"></script>
 <script src="js/main.js"></script>
 <link rel="stylesheet" href="css/styles.css">
