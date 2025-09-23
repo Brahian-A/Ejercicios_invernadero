@@ -18,7 +18,7 @@ function updateDashboard(reading) {
 function onReading(reading) {
   updateDashboard(reading);
   History.pushReading(reading);
-  renderHistoryTable();
+  renderHistoryTable();   // ← actualiza tabla
   Actuators.applyAuto(reading);
 }
 
@@ -70,12 +70,7 @@ function initActuatorsView() {
   bindActuatorEvents();
 }
 
-/* Llamadas de inicio */
-document.addEventListener("DOMContentLoaded", () => {
-  initDashboard();
-  initActuatorsView();
-});
-
+/* ======= Historial ======= */
 function renderHistoryTable() {
   const rows = History.getLast(10);
   const table = document.getElementById("hist-table");
@@ -100,3 +95,27 @@ function initHistoryView() {
   document.getElementById("btn-clear-history").onclick = () => { History.clearHistory(); renderHistoryTable(); };
   renderHistoryTable();
 }
+
+/* ======= Simulación (esto va ANTES del DOMContentLoaded) ======= */
+function rand(n, m) { return +(Math.random() * (m - n) + n).toFixed(1); }
+function fakeReading(i=0) {
+  return { temp: rand(18, 30), hum: rand(25, 70), lux: rand(200, 900), ts: Date.now()+i*60000 };
+}
+
+let simTimer = null;
+function initSim() {
+  document.getElementById("btn-sim-1").onclick = () => onReading(fakeReading());
+  document.getElementById("btn-sim-10").onclick = () => { for (let i=0;i<10;i++) onReading(fakeReading(i)); };
+  document.getElementById("chk-sim-auto").onchange = (e) => {
+    if (e.target.checked) simTimer = setInterval(() => onReading(fakeReading()), 3000);
+    else { clearInterval(simTimer); simTimer = null; }
+  };
+}
+
+/* ======= Inicio ======= */
+document.addEventListener("DOMContentLoaded", () => {
+  initDashboard();
+  initActuatorsView();
+  initHistoryView();
+  initSim(); // ← acá, al final
+});
