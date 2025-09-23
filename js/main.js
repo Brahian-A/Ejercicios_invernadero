@@ -18,6 +18,7 @@ function updateDashboard(reading) {
 function onReading(reading) {
   updateDashboard(reading);
   History.pushReading(reading);
+  renderHistoryTable();
   Actuators.applyAuto(reading);
 }
 
@@ -74,3 +75,28 @@ document.addEventListener("DOMContentLoaded", () => {
   initDashboard();
   initActuatorsView();
 });
+
+function renderHistoryTable() {
+  const rows = History.getLast(10);
+  const table = document.getElementById("hist-table");
+  table.innerHTML =
+    `<tr><th>Hora</th><th>Temp (°C)</th><th>Hum (%)</th><th>Luz (lx)</th></tr>` +
+    rows.map(r =>
+      `<tr><td>${new Date(r.ts).toLocaleTimeString()}</td><td>${r.temp}</td><td>${r.hum}</td><td>${r.lux}</td></tr>`
+    ).join("");
+}
+
+function downloadText(filename, text) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([text], { type: "text/plain" }));
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function initHistoryView() {
+  document.getElementById("btn-export-csv").onclick  = () => downloadText("data.csv",  History.exportCSV());
+  document.getElementById("btn-export-json").onclick = () => downloadText("data.json", History.exportJSON());
+  document.getElementById("btn-clear-history").onclick = () => { History.clearHistory(); renderHistoryTable(); };
+  renderHistoryTable();
+}
