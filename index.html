@@ -8,15 +8,17 @@
 <body>
   <h1>Elige tu planta</h1>
 
+  <!-- Configuración de umbrales -->
   <section id="view-config">
-    <div><label>Temp máx <input id="in-tempMax" type="number"></label></div>
-    <div><label>Humedad mín <input id="in-humMin" type="number"></label></div>
-    <div><label>Luz mín <input id="in-luxMin" type="number"></label></div>
+    <div><label>Temp máx <input id="in-tempMax" type="number" min="-10" max="60" step="0.1"></label></div>
+    <div><label>Humedad mín <input id="in-humMin" type="number" min="0" max="100" step="1"></label></div>
+    <div><label>Luz mín <input id="in-luxMin" type="number" min="0" max="20000" step="10"></label></div>
     <button id="btn-save-thresholds">Guardar</button>
     <button id="btn-reset-thresholds">Restaurar</button>
     <div id="msg-config"></div>
   </section>
 
+  <!-- Dashboard -->
   <section id="view-dashboard">
     <div id="card-temp">Temperatura: -- °C</div>
     <div id="card-hum">Humedad: -- %</div>
@@ -24,6 +26,7 @@
     <div>Última lectura: <span id="last-ts">--:--:--</span></div>
   </section>
 
+  <!-- Panel de actuadores -->
   <section id="view-actuators">
     <div id="act-bomba">
       <strong>Bomba</strong>
@@ -31,36 +34,35 @@
       <button id="btn-bomba-manual">ON/OFF</button>
       <label><input type="checkbox" id="chk-bomba-auto"> Auto</label>
     </div>
-    
-    <section id="view-history">
-      <h2>Historial (últimas 10)</h2>
-      <table id="hist-table"></table>
-      <button id="btn-export-csv">Exportar CSV</button>
-      <button id="btn-export-json">Exportar JSON</button>
-      <button id="btn-clear-history">Borrar</button>
-    </section>
-    
-    <section id="view-sim">
-      <h2>Simulación</h2>
-      <button id="btn-sim-1">Simular 1 lectura</button>
-      <button id="btn-sim-10">Simular 10 lecturas</button>
-      <label style="margin-left:8px;"><input type="checkbox" id="chk-sim-auto"> Auto cada 3s</label>
-    </section>
-    
     <div id="act-ventilador">
       <strong>Ventilador</strong>
       <span id="lbl-ventilador-estado"></span>
       <button id="btn-ventilador-manual">ON/OFF</button>
       <label><input type="checkbox" id="chk-ventilador-auto"> Auto</label>
     </div>
-    
     <div id="act-luces">
       <strong>Luces</strong>
       <span id="lbl-luces-estado"></span>
       <button id="btn-luces-manual">ON/OFF</button>
       <label><input type="checkbox" id="chk-luces-auto"> Auto</label>
     </div>
-  
+  </section>
+
+  <!-- Historial -->
+  <section id="view-history">
+    <h2>Historial (últimas 10)</h2>
+    <table id="hist-table"></table>
+    <button id="btn-export-csv">Exportar CSV</button>
+    <button id="btn-export-json">Exportar JSON</button>
+    <button id="btn-clear-history">Borrar</button>
+  </section>
+
+  <!-- Simulación (para probar sin backend) -->
+  <section id="view-sim">
+    <h2>Simulación</h2>
+    <button id="btn-sim-1">Simular 1 lectura</button>
+    <button id="btn-sim-10">Simular 10 lecturas</button>
+    <label style="margin-left:8px;"><input type="checkbox" id="chk-sim-auto"> Auto cada 3s</label>
   </section>
 
   <!-- Orden correcto de scripts -->
