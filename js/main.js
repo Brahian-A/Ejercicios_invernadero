@@ -1,9 +1,11 @@
 let uiThresholds = Thresholds.getThresholds();
 
+/* ======= Util ======= */
 function formatTime(ms) {
   return new Date(ms).toLocaleTimeString();
 }
 
+/* ======= Dashboard ======= */
 function updateDashboard(reading) {
   document.getElementById("card-temp").innerText = `Temperatura: ${reading.temp} °C`;
   document.getElementById("card-hum").innerText  = `Humedad: ${reading.hum} %`;
@@ -18,14 +20,15 @@ function updateDashboard(reading) {
 function onReading(reading) {
   updateDashboard(reading);
   History.pushReading(reading);
-  renderHistoryTable();   // ← actualiza tabla
-  Actuators.applyAuto(reading);
+  renderHistoryTable();           // refresca historial
+  Actuators.applyAuto(reading);   // modo automático según umbrales
 }
 
 function initDashboard() {
   Sensors.subscribeReadings(onReading);
 }
 
+/* ======= Actuadores ======= */
 function renderActuators(state) {
   const map = [
     ["bomba","act-bomba","lbl-bomba-estado"],
@@ -96,7 +99,47 @@ function initHistoryView() {
   renderHistoryTable();
 }
 
-/* ======= Simulación (esto va ANTES del DOMContentLoaded) ======= */
+/* ======= Configuración de Umbrales ======= */
+function fillThresholdForm() {
+  const th = Thresholds.getThresholds();
+  document.getElementById("in-tempMax").value = th.tempMax;
+  document.getElementById("in-humMin").value  = th.humMin;
+  document.getElementById("in-luxMin").value  = th.luxMin;
+}
+
+function refreshUIAfterThresholdChange() {
+  uiThresholds = Thresholds.getThresholds();     // refresca copia en memoria
+  const last = History.getLast ? History.getLast(1)[0] : null;
+  if (last) updateDashboard(last);               // repinta alertas con nuevos umbrales
+}
+
+function initConfigView() {
+  const msg = document.getElementById("msg-config");
+  fillThresholdForm();
+
+  document.getElementById("btn-save-thresholds").onclick = () => {
+    try {
+      Thresholds.setThresholds({
+        tempMax: Number(document.getElementById("in-tempMax").value),
+        humMin:  Number(document.getElementById("in-humMin").value),
+        luxMin:  Number(document.getElementById("in-luxMin").value),
+      });
+      msg.innerText = "Guardado ✔";
+      refreshUIAfterThresholdChange();
+    } catch (e) {
+      msg.innerText = e.message || "Error al guardar";
+    }
+  };
+
+  document.getElementById("btn-reset-thresholds").onclick = () => {
+    Thresholds.resetThresholds();
+    fillThresholdForm();
+    msg.innerText = "Valores por defecto";
+    refreshUIAfterThresholdChange();
+  };
+}
+
+/* ======= Simulación ======= */
 function rand(n, m) { return +(Math.random() * (m - n) + n).toFixed(1); }
 function fakeReading(i=0) {
   return { temp: rand(18, 30), hum: rand(25, 70), lux: rand(200, 900), ts: Date.now()+i*60000 };
@@ -117,5 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initDashboard();
   initActuatorsView();
   initHistoryView();
-  initSim(); // ← acá, al final
+  initConfigView();
+  initSim();
 });

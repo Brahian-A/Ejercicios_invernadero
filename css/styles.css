@@ -1,19 +1,39 @@
 body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-  }
-  
-  #view-dashboard div {
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .alert {
-    background-color: #ffdddd;
-    border: 1px solid #ff0000;
-  }
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
 
-  .is-on  { border: 2px solid #16a34a; padding: 6px; }
-  .is-off { border: 2px solid #6b7280; padding: 6px; }
+#view-dashboard div,
+#view-actuators > div,
+#view-config div,
+#view-sim,
+#view-history {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.alert {
+  background-color: #ffdddd;
+  border: 1px solid #ff0000;
+}
+
+.is-on  { border: 2px solid #16a34a; padding: 6px; }
+.is-off { border: 2px solid #6b7280; padding: 6px; }
+
+/* Tabla historial */
+#hist-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0;
+}
+#hist-table th, #hist-table td {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: left;
+}
+#hist-table th {
+  background: #f5f5f5;
+  font-weight: bold;
+}
