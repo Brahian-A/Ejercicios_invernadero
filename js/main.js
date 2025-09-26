@@ -155,11 +155,51 @@ function initSim() {
   };
 }
 
-/* ======= Inicio ======= */
-document.addEventListener("DOMContentLoaded", () => {
+/* ======= Router de pestañas ======= */
+function setActiveTab(name) {
+  const ids = {
+    dashboard: "tab-dashboard",
+    actuators: "tab-actuators",
+    history:   "tab-history",
+    config:    "tab-config",
+  };
+  Object.values(ids).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("active");
+  });
+  const active = document.getElementById(ids[name]);
+  if (active) active.classList.add("active");
+}
+
+function showView(name) {
+  ["dashboard","actuators","history","config"].forEach(v => {
+    const el = document.getElementById(`view-${v}`);
+    if (el) el.classList.toggle("hidden", v !== name);
+  });
+  if (name === "history") renderHistoryTable(); // refresca al entrar
+  setActiveTab(name);
+}
+
+function initRouter() {
+  const go = () => {
+    const name = (location.hash || "#dashboard").slice(1);
+    showView(name);
+  };
+  window.addEventListener("hashchange", go);
+  go(); // primera carga
+}
+
+/* ======= Arranque ======= */
+function initApp() {
   initDashboard();
   initActuatorsView();
   initHistoryView();
   initConfigView();
   initSim();
-});
+  initRouter();
+}
+
+
+/* ======= Inicio ======= */
+
+document.addEventListener("DOMContentLoaded", initApp);
