@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Invernadero</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+ <div class="app">
   <nav>
     <a href="#dashboard" id="tab-dashboard">Dashboard</a>
     <a href="#actuators" id="tab-actuators">Actuadores</a>
@@ -13,7 +15,7 @@
     <a href="#config"    id="tab-config">Config</a>
   </nav>
   
-  <h1>Elige tu planta</h1>
+
 
   <!-- Configuración de umbrales -->
   <section id="view-config">
@@ -27,6 +29,7 @@
 
   <!-- Dashboard -->
   <section id="view-dashboard">
+    <h1>Elige tu planta</h1>
     <div id="card-temp">Temperatura: -- °C</div>
     <div id="card-hum">Humedad: -- %</div>
     <div id="card-lux">Luz: -- lx</div>
@@ -71,8 +74,9 @@
     <button id="btn-sim-10">Simular 10 lecturas</button>
     <label style="margin-left:8px;"><input type="checkbox" id="chk-sim-auto"> Auto cada 3s</label>
   </section>
-
-  <!-- Orden correcto de scripts -->
+  </div> <!-- ← CIERRE de .app -->
+  
+<!-- Orden correcto de scripts -->
   <script src="js/thresholds.js"></script>
   <script src="js/actuators.js"></script>
   <script src="js/history.js"></script>

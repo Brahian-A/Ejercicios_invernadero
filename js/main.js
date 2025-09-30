@@ -200,6 +200,14 @@ function initApp() {
 }
 
 
+/* Ajuste de altura en móviles (vh real) */
+function setVhUnit() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+window.addEventListener('resize', setVhUnit);
+setVhUnit();
+
 /* ======= Inicio ======= */
 
 document.addEventListener("DOMContentLoaded", initApp);
