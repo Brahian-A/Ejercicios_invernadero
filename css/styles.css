@@ -1,100 +1,82 @@
-body {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-}
-
-#view-dashboard div,
-#view-actuators > div,
-#view-config div,
-#view-sim,
-#view-history {
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-.alert {
-  background-color: #ffdddd;
-  border: 1px solid #ff0000;
-}
-
-.is-on  { border: 2px solid #16a34a; padding: 6px; }
-.is-off { border: 2px solid #6b7280; padding: 6px; }
-
-/* Tabla historial */
-#hist-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 8px 0;
-}
-#hist-table th, #hist-table td {
-  border: 1px solid #ddd;
-  padding: 6px 8px;
-  text-align: left;
-}
-#hist-table th {
-  background: #f5f5f5;
-  font-weight: bold;
-}
-
-.hidden { display: none; }
-
-/* opcional, una mini pista visual */
-nav { display: flex; gap: 12px; margin: 8px 0 16px; }
-nav a { text-decoration: none; }
-nav a.active { font-weight: bold; text-decoration: underline; }
-
-/* ===== Mobile-first ===== */
-:root {
-  --app-maxw: 420px;
-  --space: 12px;
-  --radius: 14px;
-}
-
+/* Base */
+:root { --app-maxw: 420px; --space: 12px; --radius: 14px; }
 html, body { background:#f6f8f7; }
-body { font-size:16px; line-height:1.25; -webkit-text-size-adjust:100%; margin:0; }
+body { margin:0; font-family: Arial, sans-serif; font-size:16px; line-height:1.25; -webkit-text-size-adjust:100%; }
 .app { max-width: var(--app-maxw); margin:0 auto; padding: var(--space); }
+.hidden { display:none; }
 
-/* Botones e inputs cómodos al tacto */
+/* Botones/inputs */
 button, input, label { font-size:16px; }
 button { padding:10px 12px; border-radius:10px; }
 
-/* Secciones estilo tarjeta */
+/* Secciones como tarjetas */
 section {
   background:#fff; border:1px solid #e5e7eb; border-radius: var(--radius);
-  padding: var(--space); margin: var(--space) 0;
-  box-shadow:0 1px 2px rgba(0,0,0,.04);
+  padding: var(--space); margin: var(--space) 0; box-shadow:0 1px 2px rgba(0,0,0,.04);
 }
 
-/* Inputs ocupan todo el ancho */
-#view-config input[type="number"]{ width:100%; box-sizing:border-box; }
-
-/* Tabla historial con scroll */
+/* Tabla historial */
 #view-history { overflow-x:auto; }
-#hist-table { min-width:380px; border-collapse:collapse; width:100%; }
+#hist-table { min-width:380px; width:100%; border-collapse:collapse; }
 #hist-table th, #hist-table td { border:1px solid #ddd; padding:6px 8px; text-align:left; }
 #hist-table th { background:#f5f5f5; font-weight:700; }
 
-/* Nav tabs */
-nav { display:flex; gap:10px; margin:8px 0 12px; }
-nav a { text-decoration:none; color:#2f6b31; padding:8px 10px; border-radius:10px; }
-nav a.active { background:#e8f7e9; font-weight:700; }
-
-/* Ocultar vistas no activas */
-.hidden { display:none; }
-
-/* Valores principales más grandes */
-#card-temp, #card-hum, #card-lux { font-size:18px; font-weight:600; }
-#last-ts { font-weight:500; }
-
-/* ===== Breakpoints ===== */
-@media (min-width:480px){
-  :root{ --app-maxw: 520px; }
+/* Topbar */
+.topbar {
+  position: sticky; top: 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px; margin: 0 0 10px;
+  background: #2f6b31; color: #fff; border-radius: 10px;
 }
-@media (min-width:768px){
-  :root{ --app-maxw: 820px; }
+.topbar-left { display:flex; gap:6px; align-items:center; }
+.topbar-title { font-size: 1.1rem; margin: 0; text-align:center; }
+.btn-nav { background: transparent; border: none; color: #fff; font-size: 20px; line-height:1; }
+
+/* Online pill */
+.pill { padding: 4px 10px; border-radius: 999px; font-size: 12px; justify-self:end; }
+.pill-online { background: #e8f7e9; color: #2f6b31; border: 1px solid #a6d6a8; }
+
+/* Cards */
+.cards { display: grid; gap: 12px; }
+.card {
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 14px;
+  padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
-@media (min-width:1024px){
-  :root{ --app-maxw: 1040px; }
+.card-grad { background: linear-gradient(180deg, #eaf7eb 0%, #ffffff 100%); border: 1px solid #dbe7dc; }
+.card-title { color: #374151; font-weight: 600; margin-bottom: 4px; }
+.card-value { font-size: 28px; font-weight: 800; color: #1f2937; }
+
+/* Alerta humedad en card */
+.alert { background-color: #ffefef; border-color:#ff9a9a; }
+
+/* Canvas responsive */
+.card canvas { width: 100%; height: auto; display: block; }
+
+/* Drawer (menú hamburguesa) */
+.nav-drawer {
+  position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+  width: min(420px, 90vw); background: #fff; border: 1px solid #e5e7eb; border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.12); padding: 8px; display: none; z-index: 50;
+}
+.nav-drawer.open { display: block; }
+.nav-drawer a { display:block; padding:10px 12px; border-radius:8px; color:#2f6b31; text-decoration:none; font-weight:600; }
+.nav-drawer a + a { margin-top: 6px; }
+.nav-drawer a:hover { background:#e8f7e9; }
+
+.menu-backdrop { position: fixed; inset:0; background: rgba(0,0,0,.25); z-index:40; }
+.menu-backdrop.hidden { display:none; }
+
+/* Desktop: nav fijo */
+@media (min-width: 768px) {
+  /* en desktop ocultamos el botón Volver y el menú no modal */
+  #btn-back { display:none; }
+  .nav-drawer {
+    position: static; transform:none; display:flex !important; gap:10px; width:auto;
+    background: transparent; border:0; box-shadow:none; padding:0;
+  }
+  .nav-drawer a { display:inline-block; margin:0; }
+  .menu-backdrop { display:none !important; }
 }
