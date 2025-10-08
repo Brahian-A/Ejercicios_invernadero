@@ -18,7 +18,7 @@
     </nav>
     <div id="menu-backdrop" class="menu-backdrop hidden"></div>
 
-    <!-- Topbar GLOBAL -->
+    <!-- Topbar -->
     <header class="topbar">
       <div class="topbar-left">
         <button id="btn-back" class="btn-nav hidden" aria-label="volver">←</button>
@@ -28,7 +28,7 @@
       <span class="pill pill-online">Online</span>
     </header>
 
-    <!-- Dashboard (VISIBLE por defecto) -->
+    <!-- Dashboard -->
     <section id="view-dashboard">
       <div class="cards">
         <div id="card-temp-card" class="card card-grad">
@@ -45,6 +45,19 @@
         </div>
       </div>
 
+      <!-- ALERTA -->
+      <div id="alert-container" class="alert-wrap hidden" role="alert" aria-live="polite">
+        <div class="alert-pill" id="alert-pill">Alerta</div>
+        <div class="alert-card">
+          <p id="alert-message" class="alert-message"></p>
+          <ul id="alert-bullets" class="alert-bullets"></ul>
+          <div class="alert-actions">
+            <button id="btn-alert-close" class="btn-secondary" type="button">Cerrar</button>
+            <button id="btn-alert-actions" class="btn-primary" type="button">Abrir Acciones</button>
+          </div>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-title">Histórico <small>24h</small></div>
         <canvas id="chart-24h" width="360" height="140"></canvas>
@@ -55,39 +68,63 @@
       </div>
     </section>
 
-    <!-- Configuración (OCULTA al inicio) -->
+    <!-- Config -->
     <section id="view-config" class="hidden">
       <div><label>Temp máx <input id="in-tempMax" type="number" min="-10" max="60" step="0.1"></label></div>
       <div><label>Humedad mín <input id="in-humMin" type="number" min="0" max="100" step="1"></label></div>
       <div><label>Luz mín <input id="in-luxMin" type="number" min="0" max="20000" step="10"></label></div>
-      <button id="btn-save-thresholds">Guardar</button>
-      <button id="btn-reset-thresholds">Restaurar</button>
+
+      <div class="auto-card">
+        <label class="row">
+          <input id="chk-auto-plant" type="checkbox">
+          <span>Config automática por planta</span>
+        </label>
+        <div class="auto-row">
+          <input id="in-plantName" type="text" placeholder="Ej: Albahaca, Tomate, Menta">
+          <button id="btn-apply-suggested" type="button">Aplicar sugeridos</button>
+        </div>
+        <small class="hint">En automático se bloquean los campos manuales y se completan con valores sugeridos.</small>
+      </div>
+
+      <div class="cfg-actions">
+        <button id="btn-save-thresholds">Guardar</button>
+        <button id="btn-reset-thresholds">Restaurar</button>
+      </div>
       <div id="msg-config"></div>
     </section>
 
-    <!-- Actuadores (OCULTA al inicio) -->
+    <!-- Actuadores -->
     <section id="view-actuators" class="hidden">
-      <div id="act-bomba">
-        <strong>Bomba</strong>
-        <span id="lbl-bomba-estado"></span>
-        <button id="btn-bomba-manual">ON/OFF</button>
-        <label><input type="checkbox" id="chk-bomba-auto"> Auto</label>
+      <div class="quick-grid">
+        <button class="quick-card" id="tile-luces" type="button">
+          <div class="qc-icon">💡</div>
+          <div class="qc-title">Encender luces</div>
+        </button>
+
+        <button class="quick-card" id="tile-ventilador" type="button">
+          <div class="qc-icon">🌀</div>
+          <div class="qc-title">Ventilación</div>
+        </button>
+
+        <button class="quick-card" id="tile-bomba" type="button">
+          <div class="qc-icon">💧</div>
+          <div class="qc-title">Activar riego</div>
+        </button>
+
+        <div class="quick-card status" id="card-water">
+          <div class="qc-title"><span class="qc-emoji">🚰</span> <strong>Nivel de agua</strong></div>
+          <div class="progress"><div class="bar" id="water-bar" style="width:62%"></div></div>
+          <div class="water-meta">
+            <span id="water-percent">62%</span>
+            <span id="water-label">Tanque medio</span>
+          </div>
+        </div>
       </div>
-      <div id="act-ventilador">
-        <strong>Ventilador</strong>
-        <span id="lbl-ventilador-estado"></span>
-        <button id="btn-ventilador-manual">ON/OFF</button>
-        <label><input type="checkbox" id="chk-ventilador-auto"> Auto</label>
-      </div>
-      <div id="act-luces">
-        <strong>Luces</strong>
-        <span id="lbl-luces-estado"></span>
-        <button id="btn-luces-manual">ON/OFF</button>
-        <label><input type="checkbox" id="chk-luces-auto"> Auto</label>
-      </div>
+
+      <button class="btn-danger" id="btn-stop-all" type="button">Detener todo</button>
     </section>
 
-    <!-- Historial (OCULTA al inicio) -->
+    <!-- Historial -->
     <section id="view-history" class="hidden">
       <h2>Historial (últimas 10)</h2>
       <table id="hist-table"></table>
@@ -96,7 +133,7 @@
       <button id="btn-clear-history">Borrar</button>
     </section>
 
-    <!-- Simulación (OCULTA al inicio) -->
+    <!-- Simulación -->
     <section id="view-sim" class="hidden">
       <h2>Simulación</h2>
       <button id="btn-sim-1">Simular 1 lectura</button>
@@ -114,4 +151,3 @@
   <script src="js/main.js"></script>
 </body>
 </html>
-
