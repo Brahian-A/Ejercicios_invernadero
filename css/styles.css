@@ -104,3 +104,11 @@ input[disabled] { background:#f3f4f6; color:#6b7280; }
 .alert-actions { display:flex; gap:10px; margin-top:10px; }
 .btn-secondary { background:#fff; border:1px solid #cbd5e1; border-radius:12px; padding:10px 14px; }
 .btn-primary   { background:#2f6b31; color:#fff; border:0; border-radius:12px; padding:10px 14px; }
+
+.quick-card .qc-icon img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
